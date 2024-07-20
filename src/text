@@ -1,0 +1,41 @@
+   -M5EtocLJbbSSjSY7GDf
+   
+   
+   onButtonPress(){
+        const {email, password} = this.state;
+
+        this.setState({error: '', loading: true})
+
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(this.onLoginSuccess.bind(this))
+            .catch(() => {
+                firebase.auth().createUserWithEmailAndPassword(email, password)
+                    .then(this.onLoginSuccess.bind(this))
+                    .catch(this.onLoginFail.bind(this))
+            })
+
+    }
+
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "$uid == auth.uid",
+        ".write": "$uid == auth.uid"
+      }
+    }
+  }
+}
+
+
+    // componentWillReceiveProps(nextProps){
+    //     this.createDataSource(nextProps)
+    // }
+
+    // createDataSource({employees}){
+    //     const ds = new ListView.DataSource({
+    //         rowHasChanged: (r1, r2) => r1 !== r2
+    //     })
+
+    //     this.dataSource = ds.cloneWithRows(employees)
+    // }
